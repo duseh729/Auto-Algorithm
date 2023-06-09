@@ -7,16 +7,12 @@ function solution(code) {
             mode = (mode === 0)? 1 : 0  
         }else{
             // mode 값에 따라 실행할 코드가 다름
-            if (mode === 0){
-                if (i%2===0){
+            if (mode === 0 && i%2===0){
                     answer+=code[i]
-                }
-            }else{
-                if (i%2!==0){
+            }else if(mode === 1 && i%2!==0){
                     answer+=code[i]
-                }
-            }}
+            }
+        }
     }
-    
     return answer.length===0 ? "EMPTY" : answer;
 }
