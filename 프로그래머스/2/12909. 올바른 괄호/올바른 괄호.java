@@ -1,23 +1,23 @@
+import java.util.*;
+
 class Solution {
     boolean solution(String s) {
         boolean answer = true;
-        int n = 0;
+        
+        Stack<Character> bracketStack = new Stack<Character>();
         
         for(int i=0; i<s.length(); i++){
-            if(s.charAt(i)=='('){
-                n++;
-            }else{
-                n--;
-            }
-            if (n<0){
+            char b = s.charAt(i);
+            if(bracketStack.isEmpty()&b==')'){
                 return false;
+            }else if(b=='('){
+                bracketStack.push(b);
+            }else{
+                bracketStack.pop();
             }
         }
         
-        if(n!=0){
-            return false;
-        }else{
-            return true;
-        }
+        if(!bracketStack.isEmpty()) return false;
+        return answer;
     }
 }
