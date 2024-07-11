@@ -1,43 +1,37 @@
 import java.util.*;
 import java.io.*;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
+public class Main{
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        String[] temp = br.readLine().split(" ");
+        String[] nums = br.readLine().split(" ");
+        int n = Integer.parseInt(nums[0]);
+        int m = Integer.parseInt(nums[1]);
+        
+        Deque<Integer> deque = new ArrayDeque<>();
 
-        Deque<Integer> answer = new ArrayDeque<>();
-        Deque<Integer> nums = new ArrayDeque<>();
-
-        for(int i = 0; i < Integer.parseInt(temp[0]); i++){
-            nums.add(i+1);
+        for(int i=0; i<n; i++){
+            deque.add(i+1);
         }
 
-        int trigger=0;
-        while(nums.size()>0){
-//            System.out.println(nums);
-            trigger++;
-            if(trigger==Integer.parseInt(temp[1])){
-                trigger=0;
-                answer.add(nums.poll());
-                continue;
+        int cnt = 0;
+        bw.write('<');
+        while(!deque.isEmpty()){
+            cnt++;
+            if(cnt==m){
+                cnt=0;
+                int k = deque.poll();
+                if(deque.isEmpty()){
+                    bw.write(k+ ">");
+                }else{
+                    bw.write(k+ ", ");
+                }
+            }else{
+                deque.add(deque.poll());
             }
-            nums.add(nums.poll());
         }
-//        System.out.println(answer);
-
-        int k = answer.size();
-        bw.write("<");
-        for(int i=0;i<k;i++){
-            if(i==k-1){
-                bw.write(answer.poll()+"");
-                break;
-            }
-            bw.write(answer.poll()+", ");
-        }
-        bw.write(">");
 
         bw.close();
     }
