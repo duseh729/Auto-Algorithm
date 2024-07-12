@@ -1,39 +1,24 @@
-import java.util.*;
 class Solution {
+    int answer = 0;
     public int solution(int k, int[][] dungeons) {
-        int[] answer = new int[]{0};
-        boolean[] visited = new boolean[dungeons.length];
-        backtrack(new ArrayList<>(), visited, answer, dungeons, k);
-        return answer[0];
+        int n = dungeons.length;
+        boolean[] visited = new boolean[n];
+        backtrack(k, visited, n, dungeons, 0);
+        return answer;
     }
-    private void backtrack(List<int[]> curr, boolean[] visited, int[] answer, int[][] dungeons, int k){
+    private void backtrack(int cur_k, boolean[] visited, int n, int[][] dungeons, int cnt){
         // basecase
-        if(curr.size()==dungeons.length){
-            int temp = 0;
-            for(int[] i: curr){
-                // System.out.println(Arrays.toString(i));
-                if(k>=i[0]){
-                    k-=i[1];
-                    temp++;
-                }
-            }
-            if(temp>answer[0]){
-                answer[0]=temp;
-            }
-            // System.out.println("------");
-            // return answer;
-        }
+        if(cnt>answer){ // if(필요 피로도>k){
+            answer = cnt; // answer = max();
+        } 
         
         // recursive call
-        for(int i=0; i<dungeons.length; i++){
-            if(visited[i]) continue;
-            
-            curr.add(dungeons[i]);
-            visited[i] = true;
-            backtrack(curr, visited, answer, dungeons, k);
-            
-            curr.remove(curr.size()-1);
-            visited[i] = false;
+        for(int i=0; i<n; i++){
+            if(cur_k>= dungeons[i][0] && !visited[i]){
+                visited[i] = true; // dungeons[i] 추가
+                backtrack(cur_k - dungeons[i][1], visited, n, dungeons, cnt+1); // backtrack();
+                visited[i] = false; // dungeons[i] 빼기
+            }
         }
     }
 }
