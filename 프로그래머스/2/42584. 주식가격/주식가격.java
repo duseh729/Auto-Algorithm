@@ -10,7 +10,6 @@ class Solution {
             answer[i] = prices.length-1-i;
             while(true){
                 if(pricesStack.isEmpty()){
-                    // 0: index, 1: day
                     pricesStack.push(i);
                     break;
                 }
