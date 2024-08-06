@@ -33,10 +33,10 @@ class Solution {
             int curVertex = cur[0];
             int dist = cur[1];
             
-            if(maxDist<dist){
-                maxDist = dist;
-                count=0;
-            }
+            // if(maxDist<dist){
+            //     maxDist = dist;
+            //     count=0;
+            // }
             count++;
             
             // 다음 노드 예약
