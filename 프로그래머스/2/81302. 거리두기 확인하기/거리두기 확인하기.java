@@ -1,53 +1,44 @@
 import java.util.*;
 
 class Solution {
-    static int[] dx = { 0, 0, 1, -1 };
-    static int[] dy = { 1, -1, 0, 0 };
-
     public int[] solution(String[][] places) {
         int[] answer = new int[places.length];
-        int temp = 0;
-        L: for (String[] place : places) {
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (place[i].charAt(j) == 'P') {
-                        if (!bfs(i, j, place)) {
-                            answer[temp] = 0;
-                            temp++;
-                            continue L;
-                        }
-                    }
-                }
-            }
-            answer[temp] = 1;
-            temp++;
+        for(int i=0; i<places.length; i++){
+            if(check(places[i])) answer[i] = 1;
         }
         return answer;
     }
-
-    boolean bfs(int i, int j, String[] place) {
-        Queue<int[]> queue = new LinkedList<>();
-        boolean[][] visited = new boolean[5][5];
-        queue.add(new int[] { i, j, 0 });
-        visited[i][j] = true;
-
-        while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int x = current[0];
-            int y = current[1];
-            int distance = current[2];
-
-            if (distance > 0 && place[x].charAt(y) == 'P') {
-                return false;
+    
+    boolean check(String[] place){
+        for(int i=0; i<5; i++){
+            for(int j=0; j<5; j++){
+                if(place[i].charAt(j)=='P'){
+                    if(!bfs(place, new boolean[5][5], i, j)) return false;
+                } 
             }
-
-            if (distance < 2) {
-                for (int k = 0; k < 4; k++) {
-                    int nx = x + dx[k];
-                    int ny = y + dy[k];
-                    if (nx >= 0 && nx < 5 && ny >= 0 && ny < 5 && !visited[nx][ny] && place[nx].charAt(ny) != 'X') {
-                        visited[nx][ny] = true;
-                        queue.add(new int[] { nx, ny, distance + 1 });
+        }
+        return true;
+    }
+    
+    boolean bfs(String[] place, boolean[][] visited, int i, int j){
+        int[] dr = {0, 0, -1, 1};
+        int[] dc = {-1, 1, 0, 0};
+        Deque<int[]> queue = new ArrayDeque<>();
+        queue.offer(new int[]{i, j, 0});
+        visited[i][j] = true;
+        
+        while(!queue.isEmpty()){
+            int[] cur = queue.poll();
+            if(cur[2]>=2) continue;
+            
+            for(int d=0; d<4; d++){
+                int nr = cur[0] + dr[d];
+                int nc = cur[1] + dc[d];
+                if(nr>=0 && nr<5 && nc>=0 && nc<5 && place[nr].charAt(nc)!='X'){
+                    if(!visited[nr][nc]){
+                        if(place[nr].charAt(nc)=='P') return false;
+                        visited[nr][nc] = true;
+                        queue.offer(new int[]{nr, nc, cur[2]+1});
                     }
                 }
             }
