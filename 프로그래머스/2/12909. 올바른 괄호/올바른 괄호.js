@@ -1,21 +1,24 @@
 function solution(s){
     var answer = true;
-    
-    const bracketStack = [];
+
+    const stack = [];
     
     for(let i of s){
-        if(i==='('){
-            bracketStack.push(')');
+        if(i=='('){
+            stack.push(')')
         }else{
-            if(bracketStack.length<=0){
+            // if(stack.length>0 && stack[stack.length-1]){
+            if(stack.length>0){
+                stack.pop();
+            }else{
                 return false;
             }
-            bracketStack.pop();
         }
     }
-    if(bracketStack.length>0){
+    
+    if(stack.length>0){
         return false;
     }
-
+    
     return answer;
 }
