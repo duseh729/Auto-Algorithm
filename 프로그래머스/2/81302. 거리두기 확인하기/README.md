@@ -1,10 +1,10 @@
 # [level 2] 거리두기 확인하기 - 81302 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/81302) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/81302?language=javascript) 
 
 ### 성능 요약
 
-메모리: 77.9 MB, 시간: 0.22 ms
+메모리: 33.4 MB, 시간: 0.48 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 08월 08일 14:40:28
+2025년 02월 24일 07:51:00
 
 ### 문제 설명
 
