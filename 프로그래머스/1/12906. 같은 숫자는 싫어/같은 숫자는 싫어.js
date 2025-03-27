@@ -1,14 +1,4 @@
 function solution(arr)
 {
-    var answer = [];
-
-    let temp = null;
-    for(let i of arr){
-        if(i!=temp){
-            answer.push(i);
-            temp=i
-        }
-    }
-    
-    return answer
+    return arr.filter((value, idx) => value!=arr[idx+1])
 }
