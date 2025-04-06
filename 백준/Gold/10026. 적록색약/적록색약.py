@@ -1,5 +1,7 @@
-import queue
+from collections import deque
+import sys
 
+input = sys.stdin.readline
 n = int(input())
 
 color_arr = []
@@ -14,7 +16,7 @@ for _ in range(n):
 # print(arr, color_visited)
 # print(color_handicapped_visited)
     
-q = queue.Queue()
+q = deque()
 
 dx = [0, 0, 1, -1]
 dy = [1, -1, 0, 0]
@@ -29,9 +31,9 @@ for x in range(n):
         if color_visited[x][y]==False:
             color_visited[x][y]=True
 
-            q.put([x, y])
-            while not q.empty():
-              temp = q.get()
+            q.append([x, y])
+            while len(q)>0:
+              temp = q.popleft()
               current_x = temp[0]
               current_y = temp[1]
 
@@ -43,16 +45,16 @@ for x in range(n):
 
                   if nx>=0 and nx<n and ny>=0 and ny<n and color_visited[nx][ny]==False and color_arr[nx][ny]==now_color:
                       color_visited[nx][ny] = True
-                      q.put([nx, ny])
+                      q.append([nx, ny])
 
             answer[0]+=1
             
         if color_handicapped_visited[x][y]==False:
             color_handicapped_visited[x][y]=True
 
-            q.put([x, y])
-            while not q.empty():
-              temp = q.get()
+            q.append([x, y])
+            while len(q)>0:
+              temp = q.popleft()
               current_x = temp[0]
               current_y = temp[1]
 
@@ -63,7 +65,7 @@ for x in range(n):
                   if nx>=0 and nx<n and ny>=0 and ny<n and color_handicapped_visited[nx][ny]==False:
                       if now_color==color_arr[nx][ny] or (now_color=='R' and color_arr[nx][ny]=='G') or (now_color=='G' and color_arr[nx][ny]=='R'):
                         color_handicapped_visited[nx][ny] = True
-                        q.put([nx, ny])
+                        q.append([nx, ny])
 
             answer[1]+=1
 
