@@ -1,5 +1,6 @@
 from collections import deque
-
+import sys
+input = sys.stdin.readline
 N, M, H = map(int ,input().split(" "))
 
 tomato_arr = []
