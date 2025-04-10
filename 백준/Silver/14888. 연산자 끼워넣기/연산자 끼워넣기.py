@@ -1,3 +1,6 @@
+import sys
+input = sys.stdin.readline
+
 input()
 
 number_arr = list(map(int, input().split(" ")))
@@ -48,10 +51,7 @@ def dfs(sign_arr, visited, value, count, index):
             if sign_arr[i]=='*':
                 dfs(sign_arr, visited, value * number_arr[index], count+1, index + 1)
             if sign_arr[i]=='/':
-                if value<0:
-                    dfs(sign_arr, visited, -(-value // number_arr[index]), count+1, index + 1)
-                else:
-                    dfs(sign_arr, visited, value // number_arr[index], count+1, index + 1)
+                dfs(sign_arr, visited, int(value / number_arr[index]), count+1, index + 1)
             visited[i] = False
 
 dfs(sign_arr, visited, number_arr[0], 0, 1)
