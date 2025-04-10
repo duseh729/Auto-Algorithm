@@ -1,60 +1,47 @@
-import sys
-input = sys.stdin.readline
+from sys import stdin 
+def input(): 
+    return stdin.readline().rstrip()
 
-input()
+N = int(input())
 
-number_arr = list(map(int, input().split(" ")))
+lst = list(map(int, input().split()))
 
-sign = list(map(int, input().split(" ")))
+operators = list(map(int, input().split()))
 
-# print(number)
-# print(sign)
+mx = -1e9
+mn = 1e9
 
-sign_arr = []
-
-sign_dict = {
-    0: "+",
-    1: "-",
-    2: "*",
-    3: "/",
-}
-
-for index, s in enumerate(sign):
-    # print(s, index)
-    s_clone = s
-    while s_clone>0:
-        sign_arr.append(sign_dict[index])
-        s_clone-=1
-
-# print(sign_arr)
-
-max_answer = -1000000000
-min_answer = 1000000000
-
-visited = [False] * len(sign_arr)
-
-def dfs(sign_arr, visited, value, count, index):
-    global max_answer, min_answer
-
-    if count==len(sign_arr):
-        max_answer = int(max(max_answer, value))
-        min_answer = int(min(min_answer, value))
-        return
+def dfs(n, temp) :
+    global mx, mn
     
-    for i in range(len(sign_arr)):
-        if not visited[i]:
-            visited[i] = True
-            if sign_arr[i]=='+':
-                dfs(sign_arr, visited, value + number_arr[index], count+1, index + 1)
-            if sign_arr[i]=='-':
-                dfs(sign_arr, visited, value - number_arr[index], count+1, index + 1)
-            if sign_arr[i]=='*':
-                dfs(sign_arr, visited, value * number_arr[index], count+1, index + 1)
-            if sign_arr[i]=='/':
-                dfs(sign_arr, visited, int(value / number_arr[index]), count+1, index + 1)
-            visited[i] = False
+    # 종료 조건
+    if n == N-1:
+        mx = max(temp, mx)
+        mn = min(temp, mn)
+        return
+     
+    # 하부함수 호출
+    if operators[0] != 0 : # 덧셈하는 경우
+        operators[0] -= 1
+        dfs(n+1, temp + lst[n+1])
+        operators[0] += 1 
 
-dfs(sign_arr, visited, number_arr[0], 0, 1)
+    if operators[1] != 0 : # 뺄셈하는 경우
+        operators[1]-= 1
+        dfs(n+1, temp - lst[n+1])
+        operators[1] += 1
+    
+    if operators[2] != 0 : # 곱셈하는 경우
+        operators[2] -= 1
+        dfs(n+1, temp * lst[n+1])
+        operators[2] += 1
+    
+    if operators[3] != 0 : #나눗셈하는 경우
+        operators[3] -= 1
+        dfs(n+1, int(temp/lst[n+1]))
+        operators[3] += 1
 
-print(max_answer)
-print(min_answer)
+dfs(0, lst[0])
+print(mx)
+print(mn)
+    
